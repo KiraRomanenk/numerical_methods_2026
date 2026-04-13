@@ -3,11 +3,9 @@ import math
 import matplotlib.pyplot as plt
 
 def M(t):
-    """Функція вологості ґрунту"""
     return 50 * np.exp(-0.1 * t) + 5 * np.sin(t)
 
 def dM_exact(t):
-    """Точна аналітична похідна функції M(t)"""
     return -5 * np.exp(-0.1 * t) + 5 * np.cos(t)
 
 t0 = 1.0
@@ -17,7 +15,6 @@ print(f"1. Точне значення похідної в точці t0={t0}: {
 print("="*50)
 
 def diff_central(func, x, h):
-    """Формула апроксимації похідної (центральна різниця)"""
     if h == 0:
         return float('inf')
     return (func(x + h) - func(x - h)) / (2 * h)
@@ -56,8 +53,7 @@ R1 = abs(y_prime_h - exact_val)
 print(f"5. Похибка при кроці h (R1): {R1:.10e}")
 print("="*50)
 
-y_prime_R = y_prime_h + (y_prime_h - y_prime_2h) / 3
-# Обчислення похибки
+y_prime_R = y_prime_h + (y_prime_h - y_prime_2h) 
 R2 = abs(y_prime_R - exact_val)
 
 print(f"\n6. Метод Рунге-Ромберга:")
