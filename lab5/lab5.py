@@ -6,7 +6,7 @@ def f(x):
     """Функція, що описує інтенсивність навантаження."""
     return 50 + 20 * np.sin(np.pi * x / 12) + 5 * np.exp(-0.2 * (x - 12)**2)
 
-# Межі інтегрування
+# межі інтегрування
 a, b = 0, 24
 
 I_0, _ = quad(f, a, b, epsabs=1e-14, epsrel=1e-14)
@@ -50,7 +50,7 @@ I_N0 = simpson_integral(f, a, b, N0)
 eps0 = abs(I_N0 - I_0)
 
 I_N0_2 = simpson_integral(f, a, b, N0 // 2)
-I_R = I_N0 + (I_N0 - I_N0_2) / 15.0
+I_R = I_N0 + (I_N0 - I_N0_2) / 15.0 # метод рунге-ромбюерга
 epsR = abs(I_R - I_0)
 
 I_N0_4 = simpson_integral(f, a, b, N0 // 4)
@@ -58,7 +58,7 @@ num_p = I_N0_4 - I_N0_2
 den_p = I_N0_2 - I_N0
 
 if den_p != 0 and (num_p / den_p) > 0:
-    p = (1 / np.log(2)) * np.log(abs(num_p / den_p))
+    p = (1 / np.log(2)) * np.log(abs(num_p / den_p)) # метод ейткена (порядок точності)
 else:
     p = float('nan')
 
@@ -126,18 +126,18 @@ print(f"Вибране початкове N0 (кратне 8, ~N_opt/10): {N0}")
 print(f"Значення I(N0): {I_N0:.15f}")
 print(f"Похибка eps0: {eps0:.3e}\n")
 
-print("--- Метод Рунге-Ромберга ---")
+print("Метод Рунге-Ромберга")
 print(f"Уточнене значення I_R: {I_R:.15f}")
 print(f"Похибка epsR: {epsR:.3e}")
 print(f"Зменшення похибки порівняно з eps0 у {eps0/epsR:.1f} разів\n" if epsR!=0 else "Точно співпало\n")
 
-print("--- Метод Ейткена ---")
+print("Метод Ейткена")
 print(f"Оцінений порядок методу p: {p:.4f} (Теоретичний для Сімпсона: ~4.0)")
 print(f"Уточнене значення I_E: {I_E:.15f}")
 print(f"Похибка epsE: {epsE:.3e}")
 print(f"Зменшення похибки порівняно з eps0 у {eps0/epsE:.1f} разів\n" if epsE!=0 else "Точно співпало\n")
 
-print("--- Адаптивний алгоритм ---")
+print("Адаптивний алгорит-")
 print(f"{'Задана δ':>10} | {'Похибка (eps)':>15} | {'Викликів f(x)':>15}")
 print("-" * 46)
 for d_val, _, err_ad, evals in adaptive_results:
@@ -149,7 +149,6 @@ plt.figure(figsize=(14, 6))
 plt.subplot(1, 2, 1)
 x_vals = np.linspace(a, b, 1000)
 plt.plot(x_vals, f(x_vals), color='blue', label='$f(x)$')
-plt.fill_between(x_vals, f(x_vals), color='lightblue', alpha=0.4)
 plt.title('Графік функції навантаження на сервер')
 plt.xlabel('Час, x (год)')
 plt.ylabel('Навантаження, f(x)')
